@@ -599,6 +599,10 @@ class User_model extends CI_Model {
 
 	## Upload user profile photo
 	public function upload_user_profile( $file_ar ) {
+		if ( empty( $file_ar ) ) {
+			return 'OK';
+		}
+
 		## Target path
 		$target_path = $this->CONTENT_PATH_OF_LOGIN_USER . DIRECTORY_SEPARATOR . 'profile';
 

@@ -24,6 +24,7 @@ class MY_Loader extends CI_Loader {
 		$ignoreMethod = [
 			'login',
 			'index',
+			'register'
 		];
 
 		if ( ( ! $CI->user_model->is_logged_in() ) && ( ! in_array( $CI->router->fetch_class(), $ignoreClass ) || ! in_array( $CI->router->fetch_method(), $ignoreMethod ) ) ) {

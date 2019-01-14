@@ -256,7 +256,7 @@
                         {#assign task to someone#}
                         <div class="form-group">
                             <label>Who will take care of it?</label>
-                            <select name="assign_to[]" class="form-control select2" multiple="multiple" style="width: 100%;">
+                            <select name="assign_to[]" class="select2" multiple="multiple" style="width: 100%;">
                                 {% for user in users_list %}
                                     <option value="{{ user.id }}">{{ user.username }}</option>
                                 {% endfor %}

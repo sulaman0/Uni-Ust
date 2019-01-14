@@ -18,7 +18,7 @@ let UpdateProfile = ()=>{
 		success: function( data ) {
 			if ( data=='OK' ) {
 				Success( SuccessMessageAfterProfileUpdate, '.message' );
-				window.location.href;
+				location.reload();
 			} else {
 				Warning( data, '.message' )
 			}

@@ -84,6 +84,7 @@ defined( 'EXIT_DATABASE' ) OR define( 'EXIT_DATABASE', 8 ); // database error
 defined( 'EXIT__AUTO_MIN' ) OR define( 'EXIT__AUTO_MIN', 9 ); // lowest automatically-assigned error code
 defined( 'EXIT__AUTO_MAX' ) OR define( 'EXIT__AUTO_MAX', 125 ); // highest automatically-assigned error code
 defined( 'URLHANDER_KEY' ) OR define( 'URLHANDER_KEY', '8*U*S*90T000EFDSD*8' );
+
 if ( $_SERVER['HTTP_HOST'] == 'ust.com' ) {
 	// Sulaman's Computer
 	## Database name
@@ -99,7 +100,28 @@ if ( $_SERVER['HTTP_HOST'] == 'ust.com' ) {
 	## Database Prefix
 	defined( 'DBPREFIX' ) OR define( 'DBPREFIX', 'd0Pd_' );
 	## Base Urls.
-	defined( 'BASEURL' ) OR define( 'BASEURL', 'http://ust.com/sync' );
+	defined( 'BASEURL' ) OR define( 'BASEURL', 'http://ust.com/' );
+	## Content Path
+	defined( 'CONTENT_PATH' ) OR define( 'CONTENT_PATH', FCPATH . 'contents/' );
+	## Content Url
+	defined( 'CONTENT_URL' ) OR define( 'CONTENT_URL', BASEURL . 'contents/' );
+	## Project Info
+	defined( 'ProjectInfoJS' ) OR define( 'ProjectInfoJS', FCPATH . 'dist/js/ProjectInfo.js' );
+} else if ( $_SERVER['HTTP_HOST'] == 'ust.pk' ) {
+	## Talha computer
+	defined( 'DBNAME' ) OR define( 'DBNAME', 'ust' );
+	## Database Username
+	defined( 'DBUSER' ) OR define( 'DBUSER', 'root' );
+	## Database password
+	defined( 'DBPASS' ) OR define( 'DBPASS', '' );
+	## Database Host
+	defined( 'DBHOST' ) OR define( 'DBHOST', 'localhost' );
+	## Debug Database.
+	defined( 'DBDEBUG' ) OR define( 'DBDEBUG', true );
+	## Database Prefix
+	defined( 'DBPREFIX' ) OR define( 'DBPREFIX', 'd0Pd_' );
+	## Base Urls.
+	defined( 'BASEURL' ) OR define( 'BASEURL', 'http://ust.pk/' );
 	## Content Path
 	defined( 'CONTENT_PATH' ) OR define( 'CONTENT_PATH', FCPATH . 'contents/' );
 	## Content Url
