@@ -1,0 +1,30 @@
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">MAIN NAVIGATION</li>
+    {# Dashboard #}
+    <li {% if(class_name == 'user') %} class="active" {% endif %}>
+        <a href="{{ base_url() }}">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <li class="treeview {% if(class_name == 'projects') %} treeview menu-open {% endif %}">
+        <a href="#">
+            <i class="fa fa-dashboard"></i>
+            <span>Projects</span>
+        </a>
+        <ul class="treeview-menu projectMainNavUl">
+            <li><a href="{{ base_url('projects') }}"> Project List </a></li>
+            {% for project in project_list %}
+                <li class="{% if(project.id == selected_Project) %} active {% endif %}" data-ProjectID="{{ project.id }}">
+                    <a href="#"> {{ project.name }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li>
+        <a href="#" data-toggle="modal" data-target="#addTaskModelDiv">
+            <i class="fa fa-plus"></i>
+            <span>Add Task</span>
+        </a>
+    </li>
+</ul>

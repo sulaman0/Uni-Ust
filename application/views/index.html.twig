@@ -1,0 +1,132 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <section class="content-header">
+        <h1 class="captialize">
+            Tasks
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active captialize"> Dashboard</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        {# Tiles #}
+        <div class="row">
+            {# Assign task filter #}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Me Task</span>
+                        <span class="info-box-number">{{ tasks_count.total_tasks }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {# Bugs #}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-bug"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Bugs</span>
+                        <span class="info-box-number">{{ tasks_count.Bug }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix visible-sm-block"></div>
+
+            {# Improvement #}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-arrow-circle-o-up"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Improvements</span>
+                        <span class="info-box-number">{{ tasks_count.Improvement }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {# New feature#}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon label-info"><i class="fa fa-plus-circle"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">New Feature</span>
+                        <span class="info-box-number">{{ tasks_count.new_feature }}</span>
+                    </div>
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </div>
+        {# Task lists #}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="message"></div>
+                        <h3 class="box-title">List of Tasks</h3>
+
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm width-400px">
+                                <input type="search" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <button type="button" class="addProjectButton btn btn-primary">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover" id="taskListSection">
+                            <tr>
+                                <th>Ref-No</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Date & Time</th>
+                            </tr>
+                            <tr v-for="task in tasks" class="tasksTrs" :data-ProjectID="task.id">
+                                <td class="id">${task.id}</td>
+                                <td class="name"> ${task.name}</td>
+                                <td class="status" v-if="task.status==1">
+                                    <span class="label label-warning">Pending</span>
+                                </td>
+                                <td class="status" v-else-if="task.status==2">
+                                    <span class="label label-info">In Progress</span>
+                                </td>
+                                <td class="status" v-else-if="task.status==3">
+                                    <span class="label label-success">Complete</span>
+                                </td>
+                                <td class="type" v-if="task.type==1">>
+                                    <span class="label label-danger">Bug</span>
+                                </td>
+                                <td class="status" v-else-if="task.type==2">
+                                    <span class="label label-info">New Feature</span>
+                                </td>
+                                <td class="status" v-else-if="task.type==3">
+                                    <span class="label label-success">Improvement</span>
+                                </td>
+                                <td class="datetime">
+                                    ${task.datetime}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

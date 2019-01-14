@@ -1,0 +1,238 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <section class="content-header" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+        <h1 class="captialize">
+            Task Details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active captialize"> Tasks</li>
+        </ol>
+    </section>
+
+    {#Main data#}
+    <section class="content" id="taskDetailDiv">
+        {#Single Task detail#}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="head">
+                            <h3 class="box-title text-bold"> ${t_detail.res[0].id} # ${t_detail.res[0].name}</h3>
+                            <span class="pull-right">
+                                <i class="fa fa-pencil hand editSingleTask" :data-taskID="t_detail.res[0].id"></i>
+                            </span>
+                        </div>
+                        <div class="body">
+                            <table class="table">
+                                <tr>
+                                    <td>Type:</td>
+                                    <td class="type" v-if="t_detail.res[0].type==1">>
+                                        <span class="label label-danger">Bug</span>
+                                    </td>
+                                    <td class="status" v-else-if="t_detail.res[0].type==2">
+                                        <span class="label label-info">New Feature</span>
+                                    </td>
+                                    <td class="status" v-else-if="t_detail.res[0].type==3">
+                                        <span class="label label-success">Improvement</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Status:
+                                    </td>
+                                    <td class="status" v-if="t_detail.res[0].status==1">
+                                        <span class="label label-warning">Pending</span>
+                                    </td>
+                                    <td class="status" v-else-if="t_detail.res[0].status==2">
+                                        <span class="label label-info">In Progress</span>
+                                    </td>
+                                    <td class="status" v-else-if="t_detail.res[0].status==3">
+                                        <span class="label label-success">Complete</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Project Name:
+                                    </td>
+                                    <td>
+                                        ${ProjectName(t_detail.res[0].id)}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Added By:
+                                    </td>
+                                    <td>
+                                        ${StaffList(t_detail.res[0].added_by)}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Date & Time:
+                                    </td>
+                                    <td>
+                                        ${t_detail.res[0].datetime}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                            <div class="" style="margin-left: 8px">
+                                <b><i>${t_detail.res[0].description}</i></b>
+                            </div>
+
+                            <table class="table">
+                                <tr>
+                                    <td>Attachments:</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                            <div v-for="item in t_detail.attachments" class="margin-left-8px">
+                                <a target="_blank" :href="item">${ BaseName(item) }</a>
+                                <i class="fa fa-trash-o deleteAttachment hand" :data-ItemRefrence="item"></i> <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# Discussion against this task#}
+        <div class="box box-widget">
+            {# Others member comment #}
+            <div class="box-footer box-comments" v-for="com in t_detail.comments">
+                <div class="box-comment">
+                    <img class="img-circle img-sm" v-bind:src="StaffList(com.added_by,true)" alt="User Image">
+
+                    <div class="comment-text">
+                      <span class="username">
+                        ${StaffList(com.added_by)}
+                        <span class="text-muted pull-right">
+                            ${ReadAbleTime(com.datetime)}
+                        </span>
+                      </span>
+                        ${com.comment} <br>
+                        <a target="_blank" :href="com.attachment[0]">${BaseName(com.attachment[0])}</a>
+                    </div>
+                </div>
+            </div>
+
+            {#input section#}
+            <div class="box-footer">
+                <form action="{{ base_url('comment/ajax') }}?addComment" id="addCommentForm" method="post">
+                    <img class="img-responsive img-circle img-sm" v-bind:src="CurrentUserProfile" alt="Alt Text">
+                    <input type="file" class="hide" name="commentFile">
+                    <input type="hidden" class="hide" name="module_name" value="task">
+                    <input type="hidden" name="module_ref" value="{{ tasks_clicked_id }}">
+                    <div class="img-push input-group input-group-sm">
+                        <input type="text" class="form-control input-sm" name="comment" placeholder="Press enter to post comment">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-xs uploadFileForComment">
+                                <i class="fa fa-upload"></i>
+                            </button>
+                            <button type="button" class="btn btn-success submitCommentForm btn-xs">
+                                <i class="fa fa-send-o"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    {# Modals#}
+    <div class="modal fade" id="addProjectModelDiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Task</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ base_url('Tasks/ajax') }}?addTask" id="EditTaskForm" method="post">
+                        <input type="hidden" value="" name="id">
+
+                        {# Task type and Project Name#}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Project</label>
+                                    <select name="project_id" class="form-control">
+                                        {% for project in project_list %}
+                                            <option value="{{ project.id }}">{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Type</label>
+                                    <select name="type" class="form-control">
+                                        {% for task in task_types %}
+                                            <option value="{{ loop.index }}">{{ task }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {#Status#}
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <select name="status" class="form-control" id="">
+                                {% for task in task_status %}
+                                    <option value="{{ loop.index }}">{{ task }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {#Task name#}
+                        <div class="form-group">
+                            <label for="ProjectNameInput" class="control-label">Name</label>
+                            <small>(max :20)</small>
+                            <input id="ProjectNameInput" type="text" class="form-control" name="name" placeholder="Task Name e.g User Update ">
+                        </div>
+
+                        {#Task Description#}
+                        <div class="form-group">
+                            <label class="control-label">Description</label>
+                            <textarea name="description" placeholder="Task description e.g when we update userInfo then error come" class="form-control resize-vertical"></textarea>
+                        </div>
+
+                        {#Upload file for task refrence#}
+                        <div class="form-group">
+                            <label class="control-label">Upload Picture/Doc</label>
+                            <input type="file" multiple="multiple" class="form-control" name="file_upload[]" accept="doc/*,image/*" placeholder="Project Name e.g WebShop ">
+                        </div>
+
+                        {#assign task to someone#}
+                        <div class="form-group">
+                            <label>Who will take care of it?</label>
+
+                            <select id="select2AddTask" name="assign_to[]" class="select2" multiple="multiple" style="width: 100%">
+                                {% for user in users_list %}
+                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="editSingleTaskFormSUbmit btn btn-primary">Edit</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+{% endblock %}
+{% block jsFiles %}
+    <script>
+		let TaskClicked = "{{ tasks_clicked_id }}";
+		let TotalTask = "{{ tasks_count.total_tasks }}";
+    </script>
+    <script src="{{ base_url() }}/dist/js/tasks/singleTask.js?{{ md5_file("#{assets_path}js/tasks/singleTask.js") }}"></script>
+{% endblock %}

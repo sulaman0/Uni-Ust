@@ -1,0 +1,151 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <section class="content-header">
+        <h1 class="captialize">
+            Projects
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active captialize"> Projects</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="message"></div>
+                        <h3 class="box-title">List of Projects</h3>
+
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm width-400px">
+                                <input type="search" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <button type="button" class="addProjectButton btn btn-primary">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover" id="projectListSection">
+                            <tr>
+                                <th>Ref-No</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                                <th>Date of Creation</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr v-for="project in projects"  :class="{'active' : project.id == {{ selected_Project }} }" :data-ProjectID="project.id">
+                                <td class="id">${project.id}</td>
+                                <td class="name"> ${project.name}</td>
+                                <td class="status" v-if="project.status==0">
+                                    <span class="label label-danger">Working</span>
+                                </td>
+                                <td class="status" v-else>
+                                    <span class="label label-success">Complete</span>
+                                </td>
+                                <td class="description">
+                                    ${project.description}
+                                </td>
+                                <td class="datetime">
+                                    ${project.datetime}
+                                </td>
+                                <td>
+                                    <i class="fa fa-edit editProject blue hand"></i>
+                                    <i class="fa fa-trash deleteProject red hand"></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+
+    {# Modals#}
+    <div class="modal fade" id="addProjectModelDiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Project</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ base_url('Projects/ajax') }}?addEditProject" id="addEditProjectForm" method="post">
+
+                        <div class="form-group">
+                            <label for="ProjectNameInput" class="control-label">Name</label>
+                            <small>(max :20)</small>
+                            <input id="ProjectNameInput" type="text" class="form-control" name="name" placeholder="Project Name e.g WebShop ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ProjectDescription" class="control-label">Description</label>
+                            <small>(max :50)</small>
+                            <textarea id="ProjectDescription" name="description" rows="5" class="resize-vertical form-control" placeholder="Project Description e.g This project is used for online order system"></textarea>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="saveProjectFormButton btn btn-primary">Add</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="EditProjectModelDiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Project</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ base_url('Projects/ajax') }}?addEditProject" id="EditProjectForm" method="post">
+                        <input type="hidden" name="id" value="0">
+                        <div class="form-group">
+                            <label for="ProjectNameInput" class="control-label">Name</label>
+                            <small>(max :20)</small>
+                            <input id="ProjectNameInput" type="text" class="form-control" name="name" placeholder="Project Name e.g WebShop ">
+                        </div>
+                        <div class="form-group">
+                            <label for="ProjectDescription" class="control-label">Description</label>
+                            <small>(max :50)</small>
+                            <textarea id="ProjectDescription" name="description" rows="5" class="resize-vertical form-control" placeholder="Project Description e.g This project is used for online order system"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <small>(max :50)</small>
+                            <select name="status" class="form-control">
+                                <option value="0">Working</option>
+                                <option value="1">Compelete</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="EditProjectFormButton btn btn-primary">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block jsFiles %}
+    <script src="{{ base_url() }}/dist/js/projects/index.js?{{ md5_file("#{assets_path}js/projects/index.js") }}"></script>
+{% endblock %}

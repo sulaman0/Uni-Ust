@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %} {{ site_name }} {% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/bootstrap/bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/others/font-awesome.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/others/ionicons.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/others/jquery-jvectormap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/AdminLTE.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{ base_url() }}dist/css/skins/_all-skins.css">
+    {# Favicon #}
+    <link rel="icon" href="{{ base_url() }}dist/img/logo.png" type="image/png" sizes="16x16">
+    {# Select 2 css#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="{{ base_url() }}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">
+
+            </span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">
+                <img src="{{ base_url() }}dist/img/logo/logo-76.png" alt="Umer Sulaman Talha">
+            </span>
+        </a>
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                            page and may cause design problems
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-red"></i> 5 new members joined
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user text-red"></i> You changed your username
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{{ current_user.profile_url }}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{ current_user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="{{ current_user.profile_url }}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    {{ current_user.username }}
+                                    <small>Developer</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{ base_url('user/profile') }}" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{ base_url('user/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            {% include "navigation_menu.html.twig" %}
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {% block body %}  {% endblock %}
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright &copy; 2019 <a href="{{ site_url }}">UST</a>.</strong> All rights
+        reserved.
+    </footer>
+
+    {# Models#}
+    <div class="modal fade modal-scrollable" id="addTaskModelDiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Task</h4>
+                </div>
+                <div class="modal-body modal-body-scrollable">
+                    <form action="{{ base_url('Tasks/ajax') }}?addTask" id="addTaskForm" method="post">
+                        {# Task type and Project Name#}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Project</label>
+                                    <select name="project_id" class="form-control">
+                                        {% for project in project_list %}
+                                            <option {% if(project.id == selected_Project) %} selected {% endif %} value="{{ project.id }}">{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Type</label>
+                                    <select name="type" class="form-control">
+                                        {% for task in task_types %}
+                                            <option value="{{ loop.index }}">{{ task }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {#Status#}
+                        <div class="form-group">
+                            <label class="control-label">Status</label>
+                            <select name="status" class="form-control" id="">
+                                {% for task in task_status %}
+                                    <option value="{{ loop.index }}">{{ task }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {#Task name#}
+                        <div class="form-group">
+                            <label for="ProjectNameInput" class="control-label">Name</label>
+                            <small>(max :20)</small>
+                            <input id="ProjectNameInput" type="text" class="form-control" name="name" placeholder="Task Name e.g User Update ">
+                        </div>
+
+                        {#Task Description#}
+                        <div class="form-group">
+                            <label class="control-label">Description</label>
+                            <textarea name="description" placeholder="Task description e.g when we update userInfo then error come" class="form-control resize-vertical"></textarea>
+                        </div>
+
+                        {#Upload file for task refrence#}
+                        <div class="form-group">
+                            <label class="control-label">Upload Picture/Doc</label>
+                            <input type="file" multiple="multiple" class="form-control" name="file_upload[]" accept="doc/*,image/*" placeholder="Project Name e.g WebShop ">
+                        </div>
+
+                        {#assign task to someone#}
+                        <div class="form-group">
+                            <label>Who will take care of it?</label>
+                            <select name="assign_to[]" class="form-control select2" multiple="multiple" style="width: 100%;">
+                                {% for user in users_list %}
+                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="saveTaskFormButton btn btn-primary">Add</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>
+<!-- ./wrapper -->
+
+{#Vue.js#}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<!-- jQuery 3 -->
+<script src="{{ base_url() }}dist/js/others/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{{ base_url() }}dist/js/bootstrap/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="{{ base_url() }}dist/js/others/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="{{ base_url() }}dist/js/adminlte.min.js"></script>
+<!-- Sparkline -->
+<script src="{{ base_url() }}dist/js/others/jquery.sparkline.min.js"></script>
+<!-- jvectormap  -->
+<script src="{{ base_url() }}dist/js/others/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="{{ base_url() }}dist/js/others/jquery-jvectormap-world-mill-en.js"></script>
+<!-- SlimScroll -->
+<script src="{{ base_url() }}dist/js/others/jquery.slimscroll.min.js"></script>
+<!-- ChartJS -->
+<script src="{{ base_url() }}dist/js/others/Chart.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ base_url() }}dist/js/pages/dashboard2.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ base_url() }}dist/js/demo.js"></script>
+{# Ajax Submit Plugin #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.js"></script>
+{# Custom js files.#}
+<script src="{{ base_url() }}/dist/js/customFunctions.js?{{ md5_file("#{assets_path}js/customFunctions.js") }}"></script>
+<script src="{{ base_url() }}/dist/js/base.js?{{ md5_file("#{assets_path}js/base.js") }}"></script>
+<script src="{{ base_url() }}/dist/js/tasks/index.js?{{ md5_file("#{assets_path}js/tasks/index.js") }}"></script>
+<script src="{{ base_url() }}/dist/js/ProjectInfo.js?{{ md5_file("#{assets_path}js/ProjectInfo.js") }}"></script>
+<script>
+	let SingleTaskUrl = "{{ base_url('tasks/taskDetail') }}/";
+	let projectAjaxUrl = "{{ base_url('projects/ajax') }}?";
+	let taskAjaxUrl = "{{ base_url('tasks/ajax') }}?";
+	let projectController = "{{ base_url('projects') }}";
+	let Controller = "{{ class_name }}";
+	let SelectedProjectID = "{{ selected_Project }}";
+	let CurrentUser = "{{ current_user.id }}";
+</script>
+{% block jsFiles %}
+{% endblock %}
+</body>
+</html>
